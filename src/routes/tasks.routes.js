@@ -1,13 +1,11 @@
 const {Router, response} = require("express");
+const TasksController = require("../controllers/TasksController");
 
 const tasksRouter = Router();
+const tasksController = new TasksController();
 
 // 1. Criar Tarefa
-tasksRouter.post("/", (request, response) => {
-    response.status(201).json({
-        message: "Tarefa criada com sucesso!"
-    });
-}); 
+tasksRouter.post("/", tasksController.create);
 
 
 module.exports = tasksRouter;
