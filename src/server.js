@@ -1,8 +1,12 @@
 require('dotenv').config();
 const express = require('express');
+const routes = require('./routes');
 
 const app = express();
 app.use(express.json());
+
+// Importando as rotas
+app.use(routes);
 
 const PORT = process.env.PORT || 3000;
 
