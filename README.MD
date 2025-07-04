@@ -1,5 +1,5 @@
 <h1 align="center">API RESTful para Gerenciamento de Tarefas ✔️</h1> 
-  <h3 align="center">Desafio Monitoria de Engenharia de Software - 2024.2 CIn/UFPE - Desafio Backend</h3>
+  <h3 align="center">Desafio Monitoria de Engenharia de Software - 2025.1 CIn/UFPE - Desafio Backend</h3>
 
 <p align="center">
     <img width="50px" src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" />    
