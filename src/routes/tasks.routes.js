@@ -12,6 +12,7 @@ tasksRouter.get("/", tasksController.index);
 tasksRouter.get("/:id", tasksController.show);
 // 4. Atualizar Tarefa por ID
 tasksRouter.put("/:id", tasksController.update);
-
+// 5. Deletar Tarefa por ID
+tasksRouter.delete("/:id", tasksController.delete);
 
 module.exports = tasksRouter;
