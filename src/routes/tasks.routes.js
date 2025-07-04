@@ -6,6 +6,8 @@ const tasksController = new TasksController();
 
 // 1. Criar Tarefa
 tasksRouter.post("/", tasksController.create);
+// 2. Listar Tarefas
+tasksRouter.get("/", tasksController.index);
 
 
 module.exports = tasksRouter;

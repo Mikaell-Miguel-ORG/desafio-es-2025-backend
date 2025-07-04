@@ -23,6 +23,11 @@ class TasksController {
         // Respondendo com o codígo (created)
         response.status(201).json();
     }
+
+     async index(request, response) {
+        const tasks = await knex("tasks").select();
+        response.json(tasks)
+    }
 }
 
 module.exports = TasksController;
