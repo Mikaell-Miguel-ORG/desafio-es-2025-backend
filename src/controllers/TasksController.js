@@ -37,6 +37,31 @@ class TasksController {
 
         response.json(task);
     }
+
+    async update(request, response) {
+        const {id} = request.params;
+        const {titulo, descricao, status, prioridade, data_vencimento} = request.body;
+
+        const task = await knex("tasks").where({id}).first();
+        if(!task) throw new AppError("Não foi encontrado nenhum tarefa com esse ID");
+
+        // Validações de entrada do usuário
+        if(status && !["pendente", "concluída", "realizando"].includes(status)) throw new AppError("Deve ser fornecido um Status Válido (pendente, concluída, realizando)");
+        if(data_vencimento && !isValidDateFormat(data_vencimento)) throw new AppError("Deve ser fornecido uma data de vencimento válida!");
+
+        
+        // Atualizando apenas as informações enviadas na requisição
+        task.title = titulo || task.title;
+        task.description = descricao || task.description;
+        task.status = status || task.status;
+        task.due_date = data_vencimento || task.due_date;
+        task.priority = prioridade || task.priority;
+
+        await knex("tasks").where({id}).update(task);
+
+        response.json();
+    }
+
 }
 
 module.exports = TasksController;

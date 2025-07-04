@@ -10,6 +10,8 @@ tasksRouter.post("/", tasksController.create);
 tasksRouter.get("/", tasksController.index);
 // 3. Buscxar Tarefa por ID
 tasksRouter.get("/:id", tasksController.show);
+// 4. Atualizar Tarefa por ID
+tasksRouter.put("/:id", tasksController.update);
 
 
 module.exports = tasksRouter;
