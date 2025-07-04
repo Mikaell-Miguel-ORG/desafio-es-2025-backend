@@ -72,6 +72,17 @@ class TasksController {
 
         response.json();
     }
+
+     async filterByStatus(request, response) {
+        let {status} = request.query;
+
+        if(status == "concluida") status = "concluída"; // Ajusta o valor de "status" para garantir que "concluida" seja tratado como "concluída" (com acento),
+        if(!["pendente", "concluída", "realizando"].includes(status)) throw new AppError("Deve ser fornecido um Status Válido (pendente, concluida, realizando)");
+
+        const tasks = await knex("tasks").where({status});
+        response.json(tasks);
+    }
+
 }
 
 module.exports = TasksController;

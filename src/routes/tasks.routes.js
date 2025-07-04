@@ -6,8 +6,15 @@ const tasksController = new TasksController();
 
 // 1. Criar Tarefa
 tasksRouter.post("/", tasksController.create);
-// 2. Listar Tarefas
-tasksRouter.get("/", tasksController.index);
+
+tasksRouter.get("/", (request, response) => {
+    if(request.query.status){
+        return tasksController.filterByStatus(request, response); // 6. Filtar por status
+    }
+
+    return tasksController.index(request, response); // 2. Listar todas as tarefas
+});
+
 // 3. Buscxar Tarefa por ID
 tasksRouter.get("/:id", tasksController.show);
 // 4. Atualizar Tarefa por ID
