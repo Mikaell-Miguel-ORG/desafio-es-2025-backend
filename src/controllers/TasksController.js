@@ -28,6 +28,15 @@ class TasksController {
         const tasks = await knex("tasks").select();
         response.json(tasks)
     }
+
+     async show(request, response) {
+        const {id} = request.params;
+
+        const task = await knex("tasks").where({id}).first();
+        if(!task) throw new AppError("Não foi encontrado nenhum tarefa com esse ID");
+
+        response.json(task);
+    }
 }
 
 module.exports = TasksController;
