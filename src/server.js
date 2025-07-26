@@ -4,9 +4,11 @@ require("express-async-error")
 const AppError = require("./utils/AppError");
 const express = require('express');
 const routes = require('./routes');
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // Importando as rotas
 app.use(routes);
