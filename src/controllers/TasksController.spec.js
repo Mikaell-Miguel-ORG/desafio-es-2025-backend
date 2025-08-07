@@ -77,4 +77,19 @@ describe('TasksController', () => {
             await expect(controller.update(req, res)).rejects.toThrow(AppError);
         });
     });
+
+    describe('delete', () => {
+        it('deve deletar uma tarefa existente', async () => {
+            req.params = { id: 1 };
+            knex.mockReturnValueOnce({ where: jest.fn().mockReturnValue({ first: jest.fn().mockResolvedValueOnce({ id: 1 }) }) })
+                .mockReturnValueOnce({ where: jest.fn().mockReturnValue({ delete: jest.fn().mockResolvedValueOnce() }) });
+            await controller.delete(req, res);
+            expect(res.json).toHaveBeenCalled();
+        });
+        it('deve lançar erro se não encontrar tarefa', async () => {
+            req.params = { id: 2 };
+            knex.mockReturnValue({ where: jest.fn().mockReturnValue({ first: jest.fn().mockResolvedValueOnce(undefined) }) });
+            await expect(controller.delete(req, res)).rejects.toThrow(AppError);
+        });
+    });
 });
