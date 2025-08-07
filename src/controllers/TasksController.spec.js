@@ -92,4 +92,17 @@ describe('TasksController', () => {
             await expect(controller.delete(req, res)).rejects.toThrow(AppError);
         });
     });
+
+    describe('filterByStatus', () => {
+        it('deve filtrar tarefas por status válido', async () => {
+            req.query = { status: 'pendente' };
+            knex.mockReturnValue({ where: jest.fn().mockResolvedValueOnce([{ id: 1, status: 'pendente' }]) });
+            await controller.filterByStatus(req, res);
+            expect(res.json).toHaveBeenCalledWith([{ id: 1, status: 'pendente' }]);
+        });
+        it('deve lançar erro se status for inválido', async () => {
+            req.query = { status: 'errado' };
+            await expect(controller.filterByStatus(req, res)).rejects.toThrow(AppError);
+        });
+    });
 });
