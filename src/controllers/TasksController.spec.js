@@ -40,4 +40,41 @@ describe('TasksController', () => {
             expect(res.json).toHaveBeenCalledWith([{ id: 1 }]);
         });
     });
+
+    describe('show', () => {
+        it('deve retornar uma tarefa pelo id', async () => {
+            req.params = { id: 1 };
+            knex.mockReturnValue({ where: jest.fn().mockReturnValue({ first: jest.fn().mockResolvedValueOnce({ id: 1 }) }) });
+            await controller.show(req, res);
+            expect(res.json).toHaveBeenCalledWith({ id: 1 });
+        });
+        it('deve lançar erro se não encontrar tarefa', async () => {
+            req.params = { id: 2 };
+            knex.mockReturnValue({ where: jest.fn().mockReturnValue({ first: jest.fn().mockResolvedValueOnce(undefined) }) });
+            await expect(controller.show(req, res)).rejects.toThrow(AppError);
+        });
+    });
+
+    describe('update', () => {
+        it('deve atualizar uma tarefa existente', async () => {
+            req.params = { id: 1 };
+            req.body = { titulo: 'Novo', status: 'concluída' };
+            const mockTask = { id: 1, title: 'Antigo', status: 'pendente' };
+            knex.mockReturnValueOnce({ where: jest.fn().mockReturnValue({ first: jest.fn().mockResolvedValueOnce(mockTask) }) })
+                .mockReturnValueOnce({ where: jest.fn().mockReturnValue({ update: jest.fn().mockResolvedValueOnce() }) });
+            await controller.update(req, res);
+            expect(res.json).toHaveBeenCalled();
+        });
+        it('deve lançar erro se status for inválido', async () => {
+            req.params = { id: 1 };
+            req.body = { status: 'errado' };
+            knex.mockReturnValue({ where: jest.fn().mockReturnValue({ first: jest.fn().mockResolvedValueOnce({}) }) });
+            await expect(controller.update(req, res)).rejects.toThrow(AppError);
+        });
+        it('deve lançar erro se não encontrar tarefa', async () => {
+            req.params = { id: 2 };
+            knex.mockReturnValue({ where: jest.fn().mockReturnValue({ first: jest.fn().mockResolvedValueOnce(undefined) }) });
+            await expect(controller.update(req, res)).rejects.toThrow(AppError);
+        });
+    });
 });
