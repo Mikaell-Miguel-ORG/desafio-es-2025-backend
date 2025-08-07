@@ -23,8 +23,6 @@ jobs:
 
       - name: Instalar dependências
         run: npm install
-        working-directory: backend
 
       - name: Executar testes
         run: npm test
-        working-directory: backend
