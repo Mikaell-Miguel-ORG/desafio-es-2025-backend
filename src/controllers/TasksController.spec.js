@@ -32,4 +32,12 @@ describe('TasksController', () => {
             await expect(controller.create(req, res)).rejects.toThrow(AppError);
         });
     });
+
+    describe('index', () => {
+        it('deve retornar todas as tarefas', async () => {
+            knex.mockReturnValue({ select: jest.fn().mockResolvedValueOnce([{ id: 1 }]) });
+            await controller.index(req, res);
+            expect(res.json).toHaveBeenCalledWith([{ id: 1 }]);
+        });
+    });
 });
