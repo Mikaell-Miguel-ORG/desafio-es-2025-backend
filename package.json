@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cross-env NODE_ENV=development jest",
     "start": "node src/server.js",
     "start:prod": "cross-env NODE_ENV=production node src/server.js",
     "migrate:prod": "knex migrate:latest --env production",
@@ -20,10 +20,12 @@
     "express-async-error": "^0.0.2",
     "knex": "^3.1.0",
     "pg": "^8.16.3",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "supertest": "^7.1.4"
   },
   "devDependencies": {
     "cross-env": "^10.0.0",
+    "jest": "^30.0.5",
     "nodemon": "^3.1.10"
   }
 }

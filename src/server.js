@@ -36,3 +36,5 @@ app.use((error, request, response, next) => {
 app.listen(PORT, () => {
   console.log(`INFO: Server está rodando em http://localhost:${PORT}`);
 });
+
+module.exports = app;
